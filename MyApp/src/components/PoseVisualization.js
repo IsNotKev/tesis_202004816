@@ -48,10 +48,10 @@ const PoseVisualization = ({
             color="0, 150, 255" // Color fijo - azul neutro
             onPoseDetected={onPoseDetected}
           />
-          
+
           {/* Botón para cambiar la cámara */}
-          <TouchableOpacity 
-            style={styles.flipCameraButton} 
+          <TouchableOpacity
+            style={styles.flipCameraButton}
             onPress={onFlipCamera}
           >
             <CameraIcon size={24} color="white" />
@@ -66,20 +66,20 @@ const PoseVisualization = ({
           </Text>
         </View>
       )}
-      
+
       {/* Overlay para indicar correcto/incorrecto sin redibujar HumanPose */}
       {!isCompleted && !showInstructions && (
-        <Animated.View 
+        <Animated.View
           style={[
-            styles.overlay, 
-            { 
+            styles.overlay,
+            {
               backgroundColor: isCorrectPose ? 'rgba(0, 255, 0, 0.7)' : 'rgba(255, 0, 0, 0.7)',
               opacity: overlayOpacity
             }
-          ]} 
+          ]}
         />
       )}
-      
+
       <View style={styles.overlayContainer}>
         {!isCompleted && !showInstructions && (
           <View style={styles.counterContainer}>
@@ -88,28 +88,28 @@ const PoseVisualization = ({
             </Text>
           </View>
         )}
-        
+
         {!showInstructions && (
           <View style={[
-            styles.feedbackContainer, 
+            styles.feedbackContainer,
             {
-              backgroundColor: isCompleted 
-                ? 'rgba(25, 118, 210, 0.9)' 
+              backgroundColor: isCompleted
+                ? 'rgba(25, 118, 210, 0.9)'
                 : (isCorrectPose ? 'rgba(0, 128, 0, 0.7)' : 'rgba(255, 0, 0, 0.7)'),
-              maxHeight: isCompleted ? height * 0.45 : 'auto'
+              maxHeight: isCompleted ? height * 0.5 : 'auto'
             }
           ]}>
             {isCompleted ? (
-              <ScrollView contentContainerStyle={styles.summaryContainer}>
-                <Text style={[styles.feedbackText, styles.summaryTitle]}>Resumen del Ejercicio</Text>
-                <Text style={[styles.feedbackText, styles.summaryText]}>{feedback}</Text>
+              <ScrollView>
+                <Text style={styles.instructionsTitle}>Resumen del Ejercicio</Text>
+                <Text style={styles.instructionsText}>{feedback}</Text>
               </ScrollView>
             ) : (
               <Text style={styles.feedbackText}>{feedback}</Text>
             )}
           </View>
         )}
-        
+
         {isCompleted && (
           <View style={styles.buttonContainer}>
             <Button

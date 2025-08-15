@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,21 @@ import {
   StatusBar
 } from 'react-native';
 import { ArrowLeftIcon, BoltIcon } from 'react-native-heroicons/outline';
+import KeepAwake from 'react-native-keep-awake';
 
 import corrections from '../data/correctionData';
 
 const PoseCorrection = ({ navigation, route }) => {
   const { exercise } = route.params;
   
-  // Función para volver a la pantalla anterior
+  useEffect(() => {
+    KeepAwake.activate(); // Mantener pantalla encendida
+
+    return () => {
+      KeepAwake.deactivate(); // Restaurar cuando salgas de la pantalla
+    };
+  }, []);
+
   const goBack = () => {
     navigation.goBack();
   };
@@ -23,7 +31,7 @@ const PoseCorrection = ({ navigation, route }) => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor="#0f172a" />
       
-      {/* Header semitransparente, flecha y título en la misma línea */}
+      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={goBack} style={styles.backButton}>
           <ArrowLeftIcon size={24} color="#ffffff" />
@@ -34,7 +42,7 @@ const PoseCorrection = ({ navigation, route }) => {
         </View>
       </View>
       
-      {/* Sección de corrección postural (ocupando máximo espacio) */}
+      {/* Corrección postural */}
       <View style={styles.correctionContainer}>
         {exercise.hasPoseCorrection && React.createElement(corrections[exercise.poseCorrection])}
       </View>
